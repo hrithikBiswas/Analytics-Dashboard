@@ -1,0 +1,202 @@
+📌 Assignment: Analytics Dashboard
+Time Limit: 48 hours (2 days)
+
+🎯 Objective
+Build a responsive, production-ready Admin Analytics Dashboard that visualizes business data using charts and reusable UI components.
+
+This assignment is designed to assess your skills in:
+
+Component architecture & reusability
+
+State management
+
+Code quality & folder structure
+
+Performance optimization
+
+UI/UX thinking
+
+Scalability and real-world frontend practices
+
+🧰 Technical Requirements
+You must use:
+
+Framework: Next.js
+
+Language: TypeScript (required)
+
+Charts: Recharts or Chart.js
+
+Styling: Tailwind CSS
+
+Data Fetching: Axios or Fetch API
+
+State Management: Redux or Zustand
+
+📐 Project Features
+1. Layout Structure
+The dashboard must include:
+
+Sidebar navigation (collapsible)
+
+Top header
+
+Notification icon
+
+User profile dropdown
+
+Main dashboard content area
+
+2. Responsive Behavior
+Sidebar collapses on tablet and mobile devices
+
+Mobile menu toggle button
+
+Charts stack vertically on small screens
+
+📊 Dashboard Overview (KPI Section)
+Create 4 KPI cards:
+
+Total Revenue: $54,230
+
+Total Users: 1,245
+
+Orders: 342
+
+Conversion Rate: 4.3%
+
+KPI Requirements:
+
+Percentage change (+ / −)
+
+Up/down indicator icons
+
+Different styles for positive vs. negative growth
+
+📈 Charts Section
+Implement the following charts:
+
+Revenue Over Time (Line Chart)
+
+Monthly data (Jan–Dec)
+
+Tooltip on hover
+
+Responsive container
+
+Orders Per Month (Bar Chart)
+
+12 months of data
+
+Animated loading
+
+User Distribution (Pie Chart)
+
+Free users
+
+Premium users
+
+Enterprise users
+
+Traffic Source (Optional – Advanced)
+
+Organic
+
+Paid
+
+Social
+
+Referral
+
+🎛 Filters & Interactions
+Add a top filter section with:
+
+Date range selector
+
+Last 7 days
+
+Last 30 days
+
+Last 12 months
+
+Dropdown filter for user type
+
+Changes in filters should update the dashboard data accordingly.
+
+🔄 Data Handling (Choose One)
+Option A (Basic): Use a static JSON file
+
+Option B (Recommended): Create a mock API using JSON Server
+
+/stats, /revenue, /orders, /users
+
+Option C (Advanced): Simulate API delay and error handling
+
+🎨 UI / UX Expectations
+Your solution should demonstrate:
+
+Clean spacing and layout
+
+Consistent typography
+
+Modern UI design
+
+Skeleton loading states
+
+Empty and error states
+
+Smooth transitions
+
+Hover effects and micro-interactions
+
+⚡ Performance Expectations
+Memoize components where appropriate
+
+Avoid unnecessary re-renders
+
+Lazy-load routes or heavy components
+
+Proper key usage in lists
+
+✨ Bonus Features (Optional)
+Dark / Light theme toggle
+
+Role-based dashboard (Admin / Manager)
+
+Export dashboard data as CSV
+
+🧪 Evaluation Criteria
+We will evaluate your submission based on:
+
+Code readability and cleanliness
+
+Component reusability
+
+Architectural decisions
+
+Responsiveness across devices
+
+Performance awareness
+
+UX attention to detail
+
+Git commit quality and clarity
+
+📦 Submission Requirements
+Please submit:
+
+A public GitHub repository
+
+A README.md including:
+
+Setup instructions
+
+Tech stack used
+
+Architecture decisions
+
+Assumptions made
+
+A live deployed link (Vercel or Netlify)
+
+Test credentials (if authentication is implemented)
