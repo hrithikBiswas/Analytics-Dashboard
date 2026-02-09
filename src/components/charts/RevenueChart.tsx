@@ -47,7 +47,7 @@ export const RevenueChart: React.FC<RevenueChartProps> = memo(({ data }) => {
             <ResponsiveContainer width="100%" height={300}>
                 <LineChart
                     data={data}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
                 >
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                     <XAxis

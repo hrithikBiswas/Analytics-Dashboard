@@ -43,7 +43,7 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
         dateRange: '30d',
         userType: 'all',
     },
-    sidebarOpen: true,
+    sidebarOpen: false,
     loading: false,
     error: null,
 

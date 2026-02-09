@@ -35,12 +35,14 @@ export const Sidebar: React.FC<SidebarProps> = () => {
     const { sidebarOpen, toggleSidebar, setSidebarOpen } = useDashboardStore();
     const pathname = usePathname();
 
+    console.log(sidebarOpen);
+
     return (
         <>
             {/* Mobile overlay */}
             {sidebarOpen && (
                 <div
-                    className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
+                    className="fixed inset-0 z-40 bg-gray-900/70 lg:hidden"
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
@@ -48,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
             {/* Sidebar */}
             <div
                 className={cn(
-                    'fixed inset-y-0 left-0 z-50 flex flex-col bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-700 lg:translate-x-0', //transition-all duration-300 ease-in-out
+                    'fixed inset-y-0 left-0 z-50 flex flex-col bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-700 lg:translate-x-0 transition-transform duration-300 ease-in-out', //transition-all duration-300 ease-in-out
                     sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:w-20',
                     !sidebarOpen && 'lg:w-20',
                     sidebarOpen && 'w-64',
@@ -84,6 +86,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
                         <Link
                             key={item.name}
                             href={item.href}
+                            onClick={() => setSidebarOpen(false)}
                             className={cn(
                                 'group flex items-center px-3 py-2 text-sm font-semibold rounded-md',
                                 pathname === item.href
