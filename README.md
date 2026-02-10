@@ -42,7 +42,7 @@ A responsive, production-ready Admin Analytics Dashboard built with Next.js, Typ
 ## 📁 Project Structure
 
 ```
-admin-analytics-dashboard/
+analytics-dashboard/
 ├── src/
 │   ├── app/
 │   │   ├── api/              # API routes
@@ -61,6 +61,7 @@ admin-analytics-dashboard/
 │   │   │   ├── UserDistributionChart.tsx
 │   │   │   └── TrafficSourceChart.tsx
 │   │   ├── layout/           # Layout components
+│   │   │   ├── DashboardLayout.tsx
 │   │   │   ├── Sidebar.tsx
 │   │   │   └── Header.tsx
 │   │   └── ui/               # UI components
@@ -329,24 +330,10 @@ npm run lint     # Run ESLint
 ### Future Enhancements
 
 - [ ] Role-based dashboard views
-- [ ] CSV export functionality
+  <!-- - [ ] CSV export functionality -->
 - [ ] Real-time data updates (WebSocket)
 - [ ] Advanced analytics filtering
 - [ ] User authentication
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License.
 
 ## 👥 Author
 
