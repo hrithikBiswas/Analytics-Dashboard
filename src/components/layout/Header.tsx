@@ -9,7 +9,6 @@ import {
     Search,
     PanelLeftOpen,
     ChevronDown,
-    User,
     Settings,
     LogOut,
     UserPen,
@@ -17,6 +16,7 @@ import {
 import { useDashboardStore } from '@/store/dashboardStore';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 interface HeaderProps {
     onMenuClick: () => void;
@@ -81,20 +81,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                 {/* Right side */}
                 <div className="flex items-center gap-3">
                     {/* Theme Toggle */}
-                    <button
-                        // onClick={toggleTheme}
-                        onClick={() =>
-                            setTheme(theme === 'light' ? 'dark' : 'light')
-                        }
-                        className="p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-                        aria-label="Toggle theme"
-                    >
-                        {theme === 'light' ? (
-                            <Moon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-                        ) : (
-                            <Sun className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-                        )}
-                    </button>
+                    <ThemeToggle />
 
                     {/* Notifications */}
                     <div className="relative">

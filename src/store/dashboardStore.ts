@@ -17,6 +17,7 @@ interface DashboardState {
 }
 
 export const useDashboardStore = create<DashboardState>((set) => ({
+    //stats
     filters: {
         dateRange: '30days',
         userType: 'all',
@@ -26,6 +27,8 @@ export const useDashboardStore = create<DashboardState>((set) => ({
     menuSidebarCollapsed: true,
     loading: false,
     error: null,
+
+    //actions
     setFilters: (filters) =>
         set((state) => ({
             filters: { ...state.filters, ...filters },

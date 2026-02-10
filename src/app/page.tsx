@@ -20,14 +20,7 @@ import {
 } from '@/types';
 
 export default function DashboardPage() {
-    const {
-        filters,
-        sidebarCollapsed,
-        toggleSidebar,
-        setFilters,
-        setLoading,
-        setError,
-    } = useDashboardStore();
+    const { filters, setFilters, setLoading, setError } = useDashboardStore();
 
     const [stats, setStats] = useState<DashboardStats | null>(null);
     const [revenueData, setRevenueData] = useState<RevenueData[]>([]);
