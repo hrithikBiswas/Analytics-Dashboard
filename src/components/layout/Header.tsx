@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                 <div className="flex items-center gap-4">
                     <button
                         onClick={onMenuClick}
-                        className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors lg:hidden"
+                        className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors md:hidden"
                         aria-label="Toggle menu"
                     >
                         <Menu className="h-5 w-5 text-gray-600 dark:text-gray-400" />
@@ -63,7 +63,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
 
                     {sidebarCollapsed && (
                         <PanelLeftOpen
-                            className="hidden lg:inline cursor-pointer text-gray-500 hover:text-gray-600 transition-colors"
+                            className="hidden md:inline cursor-pointer text-gray-500 hover:text-gray-600 transition-colors"
                             onClick={toggleSidebar}
                         />
                     )}
@@ -177,7 +177,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                                     className="fixed inset-0 z-10"
                                     onClick={() => setShowUserProfile(false)}
                                 ></div>
-                                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 dark:border-gray-700 rounded-md shadow-lg border border-gray-200 z-50">
+                                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 dark:border-gray-700 rounded-md shadow-lg border border-gray-200 z-50 animate-slide-in">
                                     <div className="py-1">
                                         <Link
                                             href="#"

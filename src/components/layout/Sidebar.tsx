@@ -46,9 +46,9 @@ const Sidebar: React.FC<SidebarProps> = memo(
                 {/* Sidebar for mobile */}
                 <aside
                     className={`
-          lg:hidden fixed lg:sticky top-0 left-0 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 
+          md:hidden fixed md:sticky top-0 left-0 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 
           transition-all duration-300 z-50
-          ${menuCollapsed ? '-translate-x-full lg:translate-x-0 lg:w-20' : 'translate-x-0 w-64'}
+          ${menuCollapsed ? '-translate-x-full md:translate-x-0 md:w-20' : 'translate-x-0 w-64'}
         `}
                 >
                     <div className="flex flex-col h-full">
@@ -64,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = memo(
                                             Analytics
                                         </span>
                                         <PanelRightOpen
-                                            className="hidden lg:inline cursor-pointer text-gray-500 hover:text-gray-600 transition-colors"
+                                            className="hidden md:inline cursor-pointer text-gray-500 hover:text-gray-600 transition-colors"
                                             onClick={onCollapseSidebar}
                                         />
                                     </div>
@@ -73,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = memo(
                             {!collapsed && (
                                 <button
                                     onClick={onCloseMenu}
-                                    className="lg:hidden p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+                                    className="md:hidden p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                                 >
                                     <X className="h-5 w-5 text-gray-600 dark:text-gray-400" />
                                 </button>
@@ -142,9 +142,9 @@ const Sidebar: React.FC<SidebarProps> = memo(
 
                 <aside
                     className={`
-          hidden lg:block fixed lg:sticky top-0 left-0 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 
+          hidden md:block fixed md:sticky top-0 left-0 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 
           transition-all ease-in-out duration-300 z-50
-          ${collapsed ? '-translate-x-full lg:translate-x-0 lg:w-20' : 'translate-x-0 w-64'}
+          ${collapsed ? '-translate-x-full md:translate-x-0 md:w-20' : 'translate-x-0 w-64'}
         `}
                 >
                     <div className="flex flex-col h-full">
@@ -160,7 +160,7 @@ const Sidebar: React.FC<SidebarProps> = memo(
                                             Analytics
                                         </span>
                                         <PanelRightOpen
-                                            className="hidden lg:inline cursor-pointer text-gray-500 hover:text-gray-600 transition-colors"
+                                            className="hidden md:inline cursor-pointer text-gray-500 hover:text-gray-600 transition-colors"
                                             onClick={onCollapseSidebar}
                                         />
                                     </div>
@@ -169,7 +169,7 @@ const Sidebar: React.FC<SidebarProps> = memo(
                             {!collapsed && (
                                 <button
                                     onClick={onCloseMenu}
-                                    className="lg:hidden p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+                                    className="md:hidden p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                                 >
                                     <X className="h-5 w-5 text-gray-600 dark:text-gray-400" />
                                 </button>
