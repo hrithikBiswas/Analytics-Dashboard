@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import Sidebar from '@/components/layout/Sidebar';
-import Header from '@/components/layout/Header';
 import KPICard from '@/components/ui/KPIGrid';
 import FilterSection from '@/components/ui/FilterSection';
 import RevenueChart from '@/components/charts/RevenueChart';
