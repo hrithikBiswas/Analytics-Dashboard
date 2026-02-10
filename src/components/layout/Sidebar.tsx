@@ -209,7 +209,7 @@ const Sidebar: React.FC<SidebarProps> = memo(
                         </nav>
 
                         {/* User Profile */}
-                        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+                        {/* <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                             <div
                                 className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''}`}
                             >
@@ -229,7 +229,7 @@ const Sidebar: React.FC<SidebarProps> = memo(
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </aside>
             </>
