@@ -10,7 +10,6 @@ import {
 
 const API_BASE_URL = '/api';
 
-// Simulate network delay for realistic loading states
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const dashboardAPI = {
