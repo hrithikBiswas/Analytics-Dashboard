@@ -1,16 +1,34 @@
 'use client';
 
 import React, { memo, useState } from 'react';
-import { Menu, Bell, Sun, Moon, Search } from 'lucide-react';
+import {
+    Menu,
+    Bell,
+    Sun,
+    Moon,
+    Search,
+    PanelLeftOpen,
+    ChevronDown,
+    User,
+    Settings,
+    LogOut,
+    UserPen,
+} from 'lucide-react';
 import { useDashboardStore } from '@/store/dashboardStore';
+import { useTheme } from 'next-themes';
+import Link from 'next/link';
 
 interface HeaderProps {
     onMenuClick: () => void;
 }
 
 const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
-    const { theme, toggleTheme } = useDashboardStore();
+    const { sidebarCollapsed, toggleSidebar } = useDashboardStore();
     const [showNotifications, setShowNotifications] = useState(false);
+    const [showUserProfile, setShowUserProfile] = useState(false);
+    const { theme, setTheme } = useTheme();
+
+    console.log(theme);
 
     const notifications = [
         { id: 1, title: 'New order received', time: '5 min ago', unread: true },
@@ -31,19 +49,26 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
     const unreadCount = notifications.filter((n) => n.unread).length;
 
     return (
-        <header className="sticky top-0 z-30 h-16 bg-white dark:bg-dark-900 border-b border-gray-200 dark:border-dark-700 px-4 lg:px-6">
+        <header className="sticky top-0 z-30 h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-6">
             <div className="flex items-center justify-between h-full">
                 {/* Left side */}
                 <div className="flex items-center gap-4">
                     <button
                         onClick={onMenuClick}
-                        className="p-2 hover:bg-gray-100 dark:hover:bg-dark-800 rounded-lg transition-colors lg:hidden"
+                        className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors lg:hidden"
                         aria-label="Toggle menu"
                     >
                         <Menu className="h-5 w-5 text-gray-600 dark:text-gray-400" />
                     </button>
 
-                    <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-dark-800 rounded-lg flex-1 max-w-md">
+                    {sidebarCollapsed && (
+                        <PanelLeftOpen
+                            className="hidden lg:inline cursor-pointer text-gray-500 hover:text-gray-600 transition-colors"
+                            onClick={toggleSidebar}
+                        />
+                    )}
+
+                    <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg flex-1 max-w-md">
                         <Search className="h-4 w-4 text-gray-400" />
                         <input
                             type="text"
@@ -57,8 +82,11 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                 <div className="flex items-center gap-3">
                     {/* Theme Toggle */}
                     <button
-                        onClick={toggleTheme}
-                        className="p-2 hover:bg-gray-100 dark:hover:bg-dark-800 rounded-lg transition-colors"
+                        // onClick={toggleTheme}
+                        onClick={() =>
+                            setTheme(theme === 'light' ? 'dark' : 'light')
+                        }
+                        className="p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                         aria-label="Toggle theme"
                     >
                         {theme === 'light' ? (
@@ -74,7 +102,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                             onClick={() =>
                                 setShowNotifications(!showNotifications)
                             }
-                            className="p-2 hover:bg-gray-100 dark:hover:bg-dark-800 rounded-lg transition-colors relative"
+                            className="p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors relative"
                             aria-label="Notifications"
                         >
                             <Bell className="h-5 w-5 text-gray-600 dark:text-gray-400" />
@@ -90,8 +118,8 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                                     className="fixed inset-0 z-10"
                                     onClick={() => setShowNotifications(false)}
                                 ></div>
-                                <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-dark-800 rounded-lg shadow-lg border border-gray-200 dark:border-dark-700 z-20 animate-slide-in">
-                                    <div className="p-4 border-b border-gray-200 dark:border-dark-700">
+                                <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 animate-slide-in">
+                                    <div className="p-4 border-b border-gray-200 dark:border-gray-700">
                                         <h3 className="font-semibold text-gray-900 dark:text-white">
                                             Notifications
                                         </h3>
@@ -100,7 +128,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                                         {notifications.map((notification) => (
                                             <div
                                                 key={notification.id}
-                                                className={`p-4 border-b border-gray-100 dark:border-dark-700 hover:bg-gray-50 dark:hover:bg-dark-700/50 cursor-pointer transition-colors ${
+                                                className={`p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors ${
                                                     notification.unread
                                                         ? 'bg-blue-50/50 dark:bg-blue-900/10'
                                                         : ''
@@ -115,7 +143,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="p-3 text-center border-t border-gray-200 dark:border-dark-700">
+                                    <div className="p-3 text-center border-t border-gray-200 dark:border-gray-700">
                                         <button className="text-sm text-blue-600 dark:text-blue-400 hover:underline">
                                             View all notifications
                                         </button>
@@ -126,12 +154,65 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                     </div>
 
                     {/* User Profile */}
-                    <div className="hidden sm:flex items-center gap-3 pl-3 border-l border-gray-200 dark:border-dark-700">
-                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                            <span className="text-white text-xs font-semibold">
-                                AD
+                    <div className="relative">
+                        <button
+                            onClick={() => setShowUserProfile(!showUserProfile)}
+                            className="flex items-center cursor-pointer space-x-3 p-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        >
+                            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                                <span className="text-white text-xs font-semibold">
+                                    AD
+                                </span>
+                            </div>
+                            <span className="hidden md:block text-gray-700 dark:text-gray-300 font-medium">
+                                Admin User
                             </span>
-                        </div>
+                            <ChevronDown className="hidden md:block w-4 h-4 text-gray-400" />
+                        </button>
+
+                        {/* User Profile Dropdown */}
+                        {showUserProfile && (
+                            <>
+                                <div
+                                    className="fixed inset-0 z-10"
+                                    onClick={() => setShowUserProfile(false)}
+                                ></div>
+                                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 dark:border-gray-700 rounded-md shadow-lg border border-gray-200 z-50">
+                                    <div className="py-1">
+                                        <Link
+                                            href="#"
+                                            onClick={() =>
+                                                setShowUserProfile(false)
+                                            }
+                                            className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100 transition-colors"
+                                        >
+                                            <UserPen className="w-4 h-4 mr-3 text-gray-600 dark:text-gray-200" />
+                                            User Profile
+                                        </Link>
+                                        <Link
+                                            href="#"
+                                            onClick={() =>
+                                                setShowUserProfile(false)
+                                            }
+                                            className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100 transition-colors"
+                                        >
+                                            <Settings className="w-4 h-4 mr-3 text-gray-600 dark:text-gray-200" />
+                                            Settings
+                                        </Link>
+                                        <Link
+                                            href="#"
+                                            onClick={() =>
+                                                setShowUserProfile(false)
+                                            }
+                                            className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100 transition-colors"
+                                        >
+                                            <LogOut className="w-4 h-4 mr-3 text-gray-600 dark:text-gray-200" />
+                                            Sign out
+                                        </Link>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

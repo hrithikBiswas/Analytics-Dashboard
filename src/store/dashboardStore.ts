@@ -5,11 +5,13 @@ interface DashboardState {
     filters: FilterState;
     theme: 'light' | 'dark';
     sidebarCollapsed: boolean;
+    menuSidebarCollapsed: boolean;
     loading: boolean;
     error: string | null;
     setFilters: (filters: Partial<FilterState>) => void;
     toggleTheme: () => void;
     toggleSidebar: () => void;
+    toggleMenuSidebar: () => void;
     setLoading: (loading: boolean) => void;
     setError: (error: string | null) => void;
 }
@@ -21,6 +23,7 @@ export const useDashboardStore = create<DashboardState>((set) => ({
     },
     theme: 'light',
     sidebarCollapsed: false,
+    menuSidebarCollapsed: true,
     loading: false,
     error: null,
     setFilters: (filters) =>
@@ -40,6 +43,8 @@ export const useDashboardStore = create<DashboardState>((set) => ({
         }),
     toggleSidebar: () =>
         set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
+    toggleMenuSidebar: () =>
+        set((state) => ({ menuSidebarCollapsed: !state.menuSidebarCollapsed })),
     setLoading: (loading) => set({ loading }),
     setError: (error) => set({ error }),
 }));

@@ -21,15 +21,15 @@ const TrafficSourceChart: React.FC<TrafficSourceChartProps> = memo(
     ({ data, loading = false }) => {
         if (loading) {
             return (
-                <div className="bg-white dark:bg-dark-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-dark-700 animate-pulse">
-                    <div className="h-8 bg-gray-200 dark:bg-dark-700 rounded w-1/3 mb-6"></div>
-                    <div className="h-80 bg-gray-200 dark:bg-dark-700 rounded"></div>
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 animate-pulse">
+                    <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-6"></div>
+                    <div className="h-80 bg-gray-200 dark:bg-gray-700 rounded"></div>
                 </div>
             );
         }
 
         return (
-            <div className="bg-white dark:bg-dark-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-dark-700 animate-fade-in">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 animate-fade-in">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
                     Traffic Sources
                 </h3>

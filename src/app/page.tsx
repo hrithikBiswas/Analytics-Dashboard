@@ -69,124 +69,69 @@ export default function DashboardPage() {
         fetchDashboardData();
     }, [fetchDashboardData]);
 
-    console.log(stats);
-
     return (
-        <div className="flex h-screen overflow-hidden">
-            <Sidebar collapsed={sidebarCollapsed} onClose={toggleSidebar} />
+        <div className="mx-auto space-y-6">
+            {/* Page Header */}
+            <div className="animate-fade-in">
+                <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
+                    Dashboard Overview
+                </h1>
+                <p className="text-gray-600 dark:text-gray-400 mt-1">
+                    Welcome back! Here&apos;s what&apos;s happening with your
+                    business today.
+                </p>
+            </div>
 
-            <div className="flex-1 flex flex-col overflow-hidden">
-                <Header onMenuClick={toggleSidebar} />
+            {/* Filters */}
+            <FilterSection filters={filters} onFilterChange={setFilters} />
 
-                <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-dark-950 p-4 lg:p-6">
-                    <div className="max-w-7xl mx-auto space-y-6">
-                        {/* Page Header */}
-                        <div className="animate-fade-in">
-                            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-                                Dashboard Overview
-                            </h1>
-                            <p className="text-gray-600 dark:text-gray-400 mt-1">
-                                Welcome back! Here&apos;s what&apos;s happening
-                                with your business today.
-                            </p>
-                        </div>
+            {/* KPI Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                <KPICard
+                    title="Total Revenue"
+                    value={
+                        stats ? `$${stats.totalRevenue.toLocaleString()}` : '$0'
+                    }
+                    change={stats?.revenueChange ?? 0}
+                    trend={stats && stats.revenueChange >= 0 ? 'up' : 'down'}
+                    icon="revenue"
+                    loading={isLoading}
+                />
+                <KPICard
+                    title="Total Users"
+                    value={stats ? stats.totalUsers.toLocaleString() : '0'}
+                    change={stats?.usersChange ?? 0}
+                    trend={stats && stats.usersChange >= 0 ? 'up' : 'down'}
+                    icon="users"
+                    loading={isLoading}
+                />
+                <KPICard
+                    title="Orders"
+                    value={stats ? stats.totalOrders.toLocaleString() : '0'}
+                    change={stats?.ordersChange ?? 0}
+                    trend={stats && stats.ordersChange >= 0 ? 'up' : 'down'}
+                    icon="orders"
+                    loading={isLoading}
+                />
+                <KPICard
+                    title="Conversion Rate"
+                    value={stats ? `${stats.conversionRate}%` : '0%'}
+                    change={stats?.conversionChange ?? 0}
+                    trend={stats && stats.conversionChange >= 0 ? 'up' : 'down'}
+                    icon="conversion"
+                    loading={isLoading}
+                />
+            </div>
 
-                        {/* Filters */}
-                        <FilterSection
-                            filters={filters}
-                            onFilterChange={setFilters}
-                        />
+            {/* Charts Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <RevenueChart data={revenueData} loading={isLoading} />
+                <OrdersChart data={ordersData} loading={isLoading} />
+            </div>
 
-                        {/* KPI Cards */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-                            <KPICard
-                                title="Total Revenue"
-                                value={
-                                    stats
-                                        ? `$${stats.totalRevenue.toLocaleString()}`
-                                        : '$0'
-                                }
-                                change={stats?.revenueChange ?? 0}
-                                trend={
-                                    stats && stats.revenueChange >= 0
-                                        ? 'up'
-                                        : 'down'
-                                }
-                                icon="revenue"
-                                loading={isLoading}
-                            />
-                            <KPICard
-                                title="Total Users"
-                                value={
-                                    stats
-                                        ? stats.totalUsers.toLocaleString()
-                                        : '0'
-                                }
-                                change={stats?.usersChange ?? 0}
-                                trend={
-                                    stats && stats.usersChange >= 0
-                                        ? 'up'
-                                        : 'down'
-                                }
-                                icon="users"
-                                loading={isLoading}
-                            />
-                            <KPICard
-                                title="Orders"
-                                value={
-                                    stats
-                                        ? stats.totalOrders.toLocaleString()
-                                        : '0'
-                                }
-                                change={stats?.ordersChange ?? 0}
-                                trend={
-                                    stats && stats.ordersChange >= 0
-                                        ? 'up'
-                                        : 'down'
-                                }
-                                icon="orders"
-                                loading={isLoading}
-                            />
-                            <KPICard
-                                title="Conversion Rate"
-                                value={
-                                    stats ? `${stats.conversionRate}%` : '0%'
-                                }
-                                change={stats?.conversionChange ?? 0}
-                                trend={
-                                    stats && stats.conversionChange >= 0
-                                        ? 'up'
-                                        : 'down'
-                                }
-                                icon="conversion"
-                                loading={isLoading}
-                            />
-                        </div>
-
-                        {/* Charts Grid */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <RevenueChart
-                                data={revenueData}
-                                loading={isLoading}
-                            />
-                            <OrdersChart
-                                data={ordersData}
-                                loading={isLoading}
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <UserDistributionChart
-                                data={usersData}
-                                loading={isLoading}
-                            />
-                            <TrafficSourceChart
-                                data={trafficData}
-                                loading={isLoading}
-                            />
-                        </div>
-                    </div>
-                </main>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <UserDistributionChart data={usersData} loading={isLoading} />
+                <TrafficSourceChart data={trafficData} loading={isLoading} />
             </div>
         </div>
     );
