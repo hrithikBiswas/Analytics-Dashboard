@@ -1,147 +1,86 @@
 'use client';
 
-import React from 'react';
-import { memo } from 'react';
-import { formatCurrency, formatNumber, formatPercentage } from '@/lib/utils';
+import React, { memo } from 'react';
 import {
     TrendingUp,
     TrendingDown,
     DollarSign,
     Users,
     ShoppingCart,
-    Target,
+    TrendingUpIcon,
 } from 'lucide-react';
 
 interface KPICardProps {
     title: string;
     value: string | number;
     change: number;
-    changeType: 'increase' | 'decrease';
-    icon?: React.ReactNode;
-    format?: 'currency' | 'number' | 'percentage';
+    trend: 'up' | 'down';
+    icon: 'revenue' | 'users' | 'orders' | 'conversion';
+    loading?: boolean;
 }
 
-const KPICard: React.FC<KPICardProps> = ({
-    title,
-    value,
-    change,
-    changeType,
-    icon,
-    format = 'number',
-}) => {
-    const formatValue = (val: string | number) => {
-        if (typeof val === 'string') return val;
+const iconMap = {
+    revenue: DollarSign,
+    users: Users,
+    orders: ShoppingCart,
+    conversion: TrendingUpIcon,
+};
 
-        switch (format) {
-            case 'currency':
-                return formatCurrency(val);
-            case 'percentage':
-                return formatPercentage(val);
-            default:
-                return formatNumber(val);
+const KPICard: React.FC<KPICardProps> = memo(
+    ({ title, value, change, trend, icon, loading = false }) => {
+        const Icon = iconMap[icon];
+        const isPositive = trend === 'up';
+
+        if (loading) {
+            return (
+                <div className="bg-white dark:bg-dark-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-dark-700 animate-pulse">
+                    <div className="flex items-start justify-between mb-4">
+                        <div className="h-10 w-10 bg-gray-200 dark:bg-dark-700 rounded-lg"></div>
+                    </div>
+                    <div className="h-8 bg-gray-200 dark:bg-dark-700 rounded w-2/3 mb-2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-dark-700 rounded w-1/3"></div>
+                </div>
+            );
         }
-    };
 
-    const isPositive = changeType === 'increase';
-    const changeColor = isPositive ? 'text-green-600' : 'text-red-600';
-    const bgColor = isPositive ? 'bg-green-50' : 'bg-red-50';
-
-    return (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between">
-                <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {title}
-                    </p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-2">
-                        {formatValue(value)}
-                    </p>
-
+        return (
+            <div className="bg-white dark:bg-dark-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-dark-700 hover:shadow-md transition-all duration-300 animate-fade-in group">
+                <div className="flex items-start justify-between mb-4">
                     <div
-                        className={`flex items-center mt-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${bgColor} ${changeColor}`}
+                        className={`p-2.5 rounded-lg ${
+                            isPositive
+                                ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400'
+                                : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400'
+                        } group-hover:scale-110 transition-transform duration-300`}
+                    >
+                        <Icon className="h-5 w-5" />
+                    </div>
+                    <div
+                        className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${
+                            isPositive
+                                ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400'
+                                : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400'
+                        }`}
                     >
                         {isPositive ? (
-                            <TrendingUp className="w-3 h-3 mr-1" />
+                            <TrendingUp className="h-3 w-3" />
                         ) : (
-                            <TrendingDown className="w-3 h-3 mr-1" />
+                            <TrendingDown className="h-3 w-3" />
                         )}
                         {Math.abs(change)}%
                     </div>
                 </div>
-
-                <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-600">
-                        {icon}
-                    </div>
-                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                    {value}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+                    {title}
+                </p>
             </div>
-        </div>
-    );
-};
+        );
+    },
+);
 
-interface KPIGridProps {
-    stats: {
-        totalRevenue: number;
-        totalUsers: number;
-        orders: number;
-        conversionRate: number;
-    };
-}
+KPICard.displayName = 'KPICard';
 
-const MemoizedKPICard = memo(KPICard);
-MemoizedKPICard.displayName = 'MemoizedKPICard';
-
-export const KPIGrid: React.FC<KPIGridProps> = memo(({ stats }) => {
-    const kpiData = React.useMemo(
-        () => [
-            {
-                title: 'Total Revenue',
-                value: stats.totalRevenue,
-                change: 12.5,
-                changeType: 'increase' as const,
-                icon: <DollarSign className="w-6 h-6" />,
-                format: 'currency' as const,
-            },
-            {
-                title: 'Total Users',
-                value: stats.totalUsers,
-                change: 8.2,
-                changeType: 'increase' as const,
-                icon: <Users className="w-6 h-6" />,
-                format: 'number' as const,
-            },
-            {
-                title: 'Orders',
-                value: stats.orders,
-                change: -3.1,
-                changeType: 'decrease' as const,
-                icon: <ShoppingCart className="w-6 h-6" />,
-                format: 'number' as const,
-            },
-            {
-                title: 'Conversion Rate',
-                value: stats.conversionRate,
-                change: 2.4,
-                changeType: 'increase' as const,
-                icon: <Target className="w-6 h-6" />,
-                format: 'percentage' as const,
-            },
-        ],
-        [
-            stats.totalRevenue,
-            stats.totalUsers,
-            stats.orders,
-            stats.conversionRate,
-        ],
-    );
-
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {kpiData.map((kpi, index) => (
-                <MemoizedKPICard key={index} {...kpi} />
-            ))}
-        </div>
-    );
-});
-
-KPIGrid.displayName = 'KPIGrid';
+export default KPICard;

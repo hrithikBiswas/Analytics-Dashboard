@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import {
     BarChart,
     Bar,
@@ -9,67 +8,101 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend,
     ResponsiveContainer,
+    Legend,
+    Cell,
 } from 'recharts';
-import { ChartData } from '@/types';
-
-interface TooltipProps {
-    active?: boolean;
-    payload?: Array<{ value: number; name: string }>;
-    label?: string;
-}
-
-const CustomTooltip: React.FC<TooltipProps> = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-        return (
-            <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
-                <p className="text-sm font-medium text-gray-900">{label}</p>
-                <p className="text-sm text-green-600">
-                    Orders: {payload[0].value}
-                </p>
-            </div>
-        );
-    }
-    return null;
-};
+import { OrderData } from '@/types';
 
 interface OrdersChartProps {
-    data: ChartData[];
+    data: OrderData[];
+    loading?: boolean;
 }
 
-export const OrdersChart: React.FC<OrdersChartProps> = memo(({ data }) => {
-    return (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                Orders Per Month
-            </h3>
-            <ResponsiveContainer width="100%" height={300}>
-                <BarChart
-                    data={data}
-                    margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                    <XAxis
-                        dataKey="month"
-                        stroke="#6b7280"
-                        style={{ fontSize: '12px' }}
-                    />
-                    <YAxis stroke="#6b7280" style={{ fontSize: '12px' }} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend />
-                    <Bar
-                        dataKey="orders"
-                        fill="#10b981"
-                        radius={[4, 4, 0, 0]}
-                        name="Orders"
-                        animationBegin={0}
-                        animationDuration={1000}
-                    />
-                </BarChart>
-            </ResponsiveContainer>
-        </div>
-    );
-});
+const COLORS = [
+    '#3b82f6',
+    '#8b5cf6',
+    '#ec4899',
+    '#f59e0b',
+    '#10b981',
+    '#6366f1',
+];
+
+const OrdersChart: React.FC<OrdersChartProps> = memo(
+    ({ data, loading = false }) => {
+        if (loading) {
+            return (
+                <div className="bg-white dark:bg-dark-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-dark-700 animate-pulse">
+                    <div className="h-8 bg-gray-200 dark:bg-dark-700 rounded w-1/3 mb-6"></div>
+                    <div className="h-80 bg-gray-200 dark:bg-dark-700 rounded"></div>
+                </div>
+            );
+        }
+
+        return (
+            <div className="bg-white dark:bg-dark-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-dark-700 animate-fade-in">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+                    Orders Per Month
+                </h3>
+                <ResponsiveContainer width="100%" height={320}>
+                    <BarChart
+                        data={data}
+                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    >
+                        <CartesianGrid
+                            strokeDasharray="3 3"
+                            stroke="#374151"
+                            opacity={0.2}
+                        />
+                        <XAxis
+                            dataKey="month"
+                            stroke="#6b7280"
+                            tick={{ fill: '#6b7280' }}
+                            tickLine={{ stroke: '#6b7280' }}
+                        />
+                        <YAxis
+                            stroke="#6b7280"
+                            tick={{ fill: '#6b7280' }}
+                            tickLine={{ stroke: '#6b7280' }}
+                        />
+                        <Tooltip
+                            contentStyle={{
+                                backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                                border: '1px solid #374151',
+                                borderRadius: '8px',
+                                color: '#fff',
+                            }}
+                            formatter={(value: number | undefined) => [
+                                value ?? 0,
+                                'Orders',
+                            ]}
+                            labelStyle={{ color: '#9ca3af' }}
+                            cursor={{ fill: 'rgba(59, 130, 246, 0.1)' }}
+                        />
+                        <Legend
+                            wrapperStyle={{ paddingTop: '20px' }}
+                            iconType="circle"
+                        />
+                        <Bar
+                            dataKey="orders"
+                            name="Orders"
+                            radius={[8, 8, 0, 0]}
+                            animationDuration={800}
+                        >
+                            {data.map((entry, index) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={COLORS[index % COLORS.length]}
+                                />
+                            ))}
+                        </Bar>
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
+        );
+    },
+);
 
 OrdersChart.displayName = 'OrdersChart';
+
+export default OrdersChart;

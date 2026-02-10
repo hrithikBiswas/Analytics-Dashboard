@@ -1,101 +1,45 @@
 import { create } from 'zustand';
-import {
-    FilterState,
-    DashboardStats,
-    ChartData,
-    UserDistribution,
-    TrafficSource,
-} from '@/types';
-import {
-    mockStats,
-    mockChartData,
-    mockUserDistribution,
-    mockTrafficSources,
-} from '@/data/mockData';
+import { FilterState } from '@/types';
 
-interface DashboardStore {
-    // State
-    stats: DashboardStats | null;
-    chartData: ChartData[];
-    userDistribution: UserDistribution[];
-    trafficSources: TrafficSource[];
+interface DashboardState {
     filters: FilterState;
-    sidebarOpen: boolean;
+    theme: 'light' | 'dark';
+    sidebarCollapsed: boolean;
     loading: boolean;
     error: string | null;
-
-    // Actions
     setFilters: (filters: Partial<FilterState>) => void;
+    toggleTheme: () => void;
     toggleSidebar: () => void;
-    setSidebarOpen: (open: boolean) => void;
     setLoading: (loading: boolean) => void;
     setError: (error: string | null) => void;
-    refreshData: () => void;
 }
 
-export const useDashboardStore = create<DashboardStore>((set, get) => ({
-    // Initial state
-    stats: null,
-    chartData: [],
-    userDistribution: [],
-    trafficSources: [],
+export const useDashboardStore = create<DashboardState>((set) => ({
     filters: {
-        dateRange: '30d',
+        dateRange: '30days',
         userType: 'all',
     },
-    sidebarOpen: false,
+    theme: 'light',
+    sidebarCollapsed: false,
     loading: false,
     error: null,
-
-    // Actions
-    setFilters: (newFilters) =>
+    setFilters: (filters) =>
         set((state) => ({
-            filters: { ...state.filters, ...newFilters },
+            filters: { ...state.filters, ...filters },
         })),
-
+    toggleTheme: () =>
+        set((state) => {
+            const newTheme = state.theme === 'light' ? 'dark' : 'light';
+            if (typeof document !== 'undefined') {
+                document.documentElement.classList.toggle(
+                    'dark',
+                    newTheme === 'dark',
+                );
+            }
+            return { theme: newTheme };
+        }),
     toggleSidebar: () =>
-        set((state) => ({
-            sidebarOpen: !state.sidebarOpen,
-        })),
-
-    setSidebarOpen: (open) =>
-        set({
-            sidebarOpen: open,
-        }),
-
-    setLoading: (loading) =>
-        set({
-            loading,
-        }),
-
-    setError: (error) =>
-        set({
-            error,
-        }),
-
-    refreshData: async () => {
-        const { setLoading, setError } = get();
-
-        try {
-            setLoading(true);
-            setError(null);
-
-            // Simulate API delay
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            // In a real app, this would be an API call
-            set({
-                stats: mockStats,
-                chartData: mockChartData,
-                userDistribution: mockUserDistribution,
-                trafficSources: mockTrafficSources,
-            });
-        } catch (err) {
-            setError(
-                err instanceof Error ? err.message : 'Failed to load data',
-            );
-        } finally {
-            setLoading(false);
-        }
-    },
+        set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
+    setLoading: (loading) => set({ loading }),
+    setError: (error) => set({ error }),
 }));

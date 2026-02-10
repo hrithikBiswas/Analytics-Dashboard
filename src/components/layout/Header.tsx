@@ -1,131 +1,144 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
+import { Menu, Bell, Sun, Moon, Search } from 'lucide-react';
 import { useDashboardStore } from '@/store/dashboardStore';
-import { cn } from '@/lib/utils';
-import {
-    Bell,
-    Search,
-    User,
-    LogOut,
-    Settings,
-    Menu,
-    ChevronDown,
-} from 'lucide-react';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
-import { ExportButton } from '@/components/ui/ExportButton';
-import Link from 'next/link';
 
 interface HeaderProps {
-    className?: string;
+    onMenuClick: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ className }) => {
-    const { sidebarOpen, setSidebarOpen } = useDashboardStore();
-    const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
+    const { theme, toggleTheme } = useDashboardStore();
+    const [showNotifications, setShowNotifications] = useState(false);
+
+    const notifications = [
+        { id: 1, title: 'New order received', time: '5 min ago', unread: true },
+        {
+            id: 2,
+            title: 'Revenue milestone reached',
+            time: '1 hour ago',
+            unread: true,
+        },
+        {
+            id: 3,
+            title: 'New user registered',
+            time: '2 hours ago',
+            unread: false,
+        },
+    ];
+
+    const unreadCount = notifications.filter((n) => n.unread).length;
 
     return (
-        <header
-            className={cn(
-                'bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-700 px-4 py-4',
-                className,
-            )}
-        >
-            <div className="flex items-center justify-between">
-                {/* Left side - Mobile menu button and search */}
-                <div className="flex items-center space-x-4">
+        <header className="sticky top-0 z-30 h-16 bg-white dark:bg-dark-900 border-b border-gray-200 dark:border-dark-700 px-4 lg:px-6">
+            <div className="flex items-center justify-between h-full">
+                {/* Left side */}
+                <div className="flex items-center gap-4">
                     <button
-                        onClick={() => setSidebarOpen(!sidebarOpen)}
-                        className="lg:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
+                        onClick={onMenuClick}
+                        className="p-2 hover:bg-gray-100 dark:hover:bg-dark-800 rounded-lg transition-colors lg:hidden"
+                        aria-label="Toggle menu"
                     >
-                        <Menu className="w-6 h-6" />
+                        <Menu className="h-5 w-5 text-gray-600 dark:text-gray-400" />
                     </button>
 
-                    <div className="hidden md:block">
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <Search className="h-5 w-5 text-gray-400" />
-                            </div>
-                            <input
-                                type="text"
-                                placeholder="Search..."
-                                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white text-gray-700 dark:text-gray-300 dark:bg-gray-800 dark:border-gray-700 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                            />
-                        </div>
+                    <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-dark-800 rounded-lg flex-1 max-w-md">
+                        <Search className="h-4 w-4 text-gray-400" />
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className="bg-transparent border-none outline-none text-sm text-gray-900 dark:text-white placeholder-gray-500 w-full"
+                        />
                     </div>
                 </div>
 
-                {/* Right side - Notifications and profile */}
-                <div className="flex items-center space-x-2 sm:space-x-4">
-                    {/* Export Button - Hidden on mobile */}
-                    <div className="hidden sm:block">
-                        <ExportButton />
-                    </div>
-
+                {/* Right side */}
+                <div className="flex items-center gap-3">
                     {/* Theme Toggle */}
-                    <ThemeToggle />
-
-                    {/* Notifications */}
-                    <button className="relative p-2 cursor-pointer text-gray-500 hover:text-gray-700 transition-colors">
-                        <Bell className="w-6 h-6" />
-                        <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    <button
+                        onClick={toggleTheme}
+                        className="p-2 hover:bg-gray-100 dark:hover:bg-dark-800 rounded-lg transition-colors"
+                        aria-label="Toggle theme"
+                    >
+                        {theme === 'light' ? (
+                            <Moon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                        ) : (
+                            <Sun className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                        )}
                     </button>
 
-                    {/* Profile dropdown */}
+                    {/* Notifications */}
                     <div className="relative">
                         <button
                             onClick={() =>
-                                setProfileDropdownOpen(!profileDropdownOpen)
+                                setShowNotifications(!showNotifications)
                             }
-                            className="flex items-center cursor-pointer space-x-3 p-2 text-sm rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                            className="p-2 hover:bg-gray-100 dark:hover:bg-dark-800 rounded-lg transition-colors relative"
+                            aria-label="Notifications"
                         >
-                            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                                <User className="w-4 h-4 text-gray-600" />
-                            </div>
-                            <span className="hidden md:block text-gray-700 dark:text-gray-300 font-medium">
-                                Admin User
-                            </span>
-                            <ChevronDown className="hidden md:block w-4 h-4 text-gray-400" />
+                            <Bell className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                            {unreadCount > 0 && (
+                                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                            )}
                         </button>
 
-                        {/* Dropdown menu */}
-                        {profileDropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 dark:border-gray-700 rounded-md shadow-lg border border-gray-200 z-50">
-                                <div className="py-1">
-                                    <Link
-                                        href="#"
-                                        className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100 transition-colors"
-                                    >
-                                        <Settings className="w-4 h-4 mr-3 text-gray-600 dark:text-gray-200" />
-                                        Settings
-                                    </Link>
-                                    <Link
-                                        href="#"
-                                        className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100 transition-colors"
-                                    >
-                                        <LogOut className="w-4 h-4 mr-3 text-gray-600 dark:text-gray-200" />
-                                        Sign out
-                                    </Link>
+                        {/* Notification Dropdown */}
+                        {showNotifications && (
+                            <>
+                                <div
+                                    className="fixed inset-0 z-10"
+                                    onClick={() => setShowNotifications(false)}
+                                ></div>
+                                <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-dark-800 rounded-lg shadow-lg border border-gray-200 dark:border-dark-700 z-20 animate-slide-in">
+                                    <div className="p-4 border-b border-gray-200 dark:border-dark-700">
+                                        <h3 className="font-semibold text-gray-900 dark:text-white">
+                                            Notifications
+                                        </h3>
+                                    </div>
+                                    <div className="max-h-96 overflow-y-auto">
+                                        {notifications.map((notification) => (
+                                            <div
+                                                key={notification.id}
+                                                className={`p-4 border-b border-gray-100 dark:border-dark-700 hover:bg-gray-50 dark:hover:bg-dark-700/50 cursor-pointer transition-colors ${
+                                                    notification.unread
+                                                        ? 'bg-blue-50/50 dark:bg-blue-900/10'
+                                                        : ''
+                                                }`}
+                                            >
+                                                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                                    {notification.title}
+                                                </p>
+                                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                                    {notification.time}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="p-3 text-center border-t border-gray-200 dark:border-dark-700">
+                                        <button className="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                                            View all notifications
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </>
                         )}
                     </div>
-                </div>
-            </div>
 
-            {/* Mobile search */}
-            <div className="mt-4 md:hidden">
-                <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Search className="h-5 w-5 text-gray-400" />
+                    {/* User Profile */}
+                    <div className="hidden sm:flex items-center gap-3 pl-3 border-l border-gray-200 dark:border-dark-700">
+                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs font-semibold">
+                                AD
+                            </span>
+                        </div>
                     </div>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 dark:text-gray-300 dark:bg-gray-800 dark:border-gray-700 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                    />
                 </div>
             </div>
         </header>
     );
-};
+});
+
+Header.displayName = 'Header';
+
+export default Header;
