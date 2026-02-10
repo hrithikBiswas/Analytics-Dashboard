@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
     const unreadCount = notifications.filter((n) => n.unread).length;
 
     return (
-        <header className="sticky top-0 z-30 h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-6">
+        <header className="sticky top-0 z-30 h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-6 transition-colors duration-300 animate-fade-in">
             <div className="flex items-center justify-between h-full">
                 {/* Left side */}
                 <div className="flex items-center gap-4">
@@ -68,12 +68,12 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                         />
                     )}
 
-                    <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg flex-1 max-w-md">
+                    <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg flex-1 max-w-md transition-colors duration-300">
                         <Search className="h-4 w-4 text-gray-400" />
                         <input
                             type="text"
                             placeholder="Search..."
-                            className="bg-transparent border-none outline-none text-sm text-gray-900 dark:text-white placeholder-gray-500 w-full"
+                            className="bg-transparent border-none outline-none text-sm text-gray-900 dark:text-white placeholder-gray-500 w-full transition-colors duration-300"
                         />
                     </div>
                 </div>

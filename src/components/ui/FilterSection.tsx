@@ -25,11 +25,11 @@ const userTypeOptions = [
 const FilterSection: React.FC<FilterSectionProps> = memo(
     ({ filters, onFilterChange }) => {
         return (
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 mb-6 animate-fade-in">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 mb-6 transition-colors duration-300">
                 <div className="flex flex-col sm:flex-row gap-4">
                     {/* Date Range Filter */}
                     <div className="flex-1">
-                        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-300">
                             <Calendar className="h-4 w-4" />
                             Date Range
                         </label>
@@ -41,7 +41,7 @@ const FilterSection: React.FC<FilterSectionProps> = memo(
                                         .value as FilterState['dateRange'],
                                 })
                             }
-                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all"
+                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-300 animate-fade-in"
                         >
                             {dateRangeOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -53,7 +53,7 @@ const FilterSection: React.FC<FilterSectionProps> = memo(
 
                     {/* User Type Filter */}
                     <div className="flex-1">
-                        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-300">
                             <UsersIcon className="h-4 w-4" />
                             User Type
                         </label>
@@ -65,7 +65,7 @@ const FilterSection: React.FC<FilterSectionProps> = memo(
                                         .value as FilterState['userType'],
                                 })
                             }
-                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all"
+                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-300 animate-fade-in"
                         >
                             {userTypeOptions.map((option) => (
                                 <option key={option.value} value={option.value}>

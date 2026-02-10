@@ -35,19 +35,19 @@ const KPICard: React.FC<KPICardProps> = memo(
         if (loading) return <KPICardSkeleton />;
 
         return (
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-all duration-300 animate-fade-in group">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-colors duration-300 group">
                 <div className="flex items-start justify-between mb-4">
                     <div
                         className={`p-2.5 rounded-lg ${
                             isPositive
                                 ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400'
                                 : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400'
-                        } group-hover:scale-110 transition-transform duration-300`}
+                        } group-hover:scale-110 transition-colors duration-300 animate-fade-in`}
                     >
                         <Icon className="h-5 w-5" />
                     </div>
                     <div
-                        className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${
+                        className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition-colors duration-300 animate-fade-in ${
                             isPositive
                                 ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400'
                                 : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400'

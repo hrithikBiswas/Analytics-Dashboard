@@ -24,7 +24,7 @@ const RevenueChart: React.FC<RevenueChartProps> = memo(
         if (loading) return <ChartSkeleton />;
 
         return (
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 animate-fade-in">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300 animate-fade-in">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
                     Revenue Over Time
                 </h3>

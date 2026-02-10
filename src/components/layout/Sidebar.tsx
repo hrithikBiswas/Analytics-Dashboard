@@ -47,13 +47,13 @@ const Sidebar: React.FC<SidebarProps> = memo(
                 <aside
                     className={`
           md:hidden fixed md:sticky top-0 left-0 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 
-          transition-all duration-300 z-50
+          transition-all duration-300 animate-fade-in z-50
           ${menuCollapsed ? '-translate-x-full md:translate-x-0 md:w-20' : 'translate-x-0 w-64'}
         `}
                 >
                     <div className="flex flex-col h-full">
                         {/* Logo */}
-                        <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200 dark:border-gray-700">
+                        <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300 animate-fade-in">
                             <div className="flex items-center gap-3 w-full">
                                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                                     <BarChart3 className="h-5 w-5 text-white" />
@@ -90,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = memo(
                                         href={item.href}
                                         onClick={onCloseMenu}
                                         className={`
-                    flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all
+                    flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-300 animate-fade-in
                     ${
                         pathname === item.href
                             ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -143,13 +143,13 @@ const Sidebar: React.FC<SidebarProps> = memo(
                 <aside
                     className={`
           hidden md:block fixed md:sticky top-0 left-0 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 
-          transition-all ease-in-out duration-300 z-50
+          transition-all ease-in-out duration-300 animate-fade-in z-50
           ${collapsed ? '-translate-x-full md:translate-x-0 md:w-20' : 'translate-x-0 w-64'}
         `}
                 >
                     <div className="flex flex-col h-full">
                         {/* Logo */}
-                        <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200 dark:border-gray-700">
+                        <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300 animate-fade-in">
                             <div className="flex items-center gap-3 w-full">
                                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                                     <BarChart3 className="h-5 w-5 text-white" />
@@ -185,7 +185,7 @@ const Sidebar: React.FC<SidebarProps> = memo(
                                         key={item.label}
                                         href={item.href}
                                         className={`
-                    flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all
+                    flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-300 animate-fade-in
                     ${
                         pathname === item.href
                             ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
