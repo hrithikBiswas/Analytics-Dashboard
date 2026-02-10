@@ -16,7 +16,7 @@ A responsive, production-ready Admin Analytics Dashboard built with Next.js, Typ
 ### UI/UX Features
 
 - **Dark/Light Theme Toggle**: Switch between themes with smooth transitions
-- **CSV Export**: Download dashboard data in CSV format
+    <!-- - **CSV Export**: Download dashboard data in CSV format -->
 - **Loading States**: Skeleton loaders for better perceived performance
 - **Error Handling**: Graceful error recovery with retry functionality
 - **Micro-interactions**: Hover effects, transitions, and animations
@@ -31,7 +31,7 @@ A responsive, production-ready Admin Analytics Dashboard built with Next.js, Typ
 
 ## 🛠 Tech Stack
 
-- **Framework**: Next.js 15 with App Router
+- **Framework**: Next.js 16 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Charts**: Recharts
@@ -39,42 +39,44 @@ A responsive, production-ready Admin Analytics Dashboard built with Next.js, Typ
 - **Icons**: Lucide React
 - **Data Fetching**: Mock API with simulated delays
 
-## 📦 Project Structure
+## 📁 Project Structure
 
 ```
-analytics-dashboard/
-├── src/app/
-│   ├── globals.css          # Global styles and theme variables
-│   ├── layout.tsx           # Root layout
-│   └── page.tsx             # Main dashboard page
-├── src/components/
-│   ├── charts/              # Chart components
-│   │   ├── RevenueChart.tsx
-│   │   ├── OrdersChart.tsx
-│   │   ├── UserDistributionChart.tsx
-│   │   └── TrafficSourceChart.tsx
-│   ├── layout/              # Layout components
-│   │   ├── DashboardLayout.tsx
-│   │   ├── Sidebar.tsx
-│   │   └── Header.tsx
-│   └── ui/                  # Reusable UI components
-│       ├── KPIGrid.tsx
-│       ├── FilterSection.tsx
-│       ├── ThemeToggle.tsx
-│       ├── ExportButton.tsx
-│       └── Skeleton.tsx
-├── src/store/                   # Zustand stores
-│   ├── dashboardStore.ts
-│   └── themeStore.ts
-├── src/hooks/                   # Custom React hooks
-│   └── useDashboardData.ts
-├── src/lib/                     # Utility functions
-│   ├── utils.ts
-│   └── csvExport.ts
-├── src/types/                   # TypeScript type definitions
-│   └── index.ts
-└── src/data/                    # Mock data
-    └── mockData.ts
+admin-analytics-dashboard/
+├── src/
+│   ├── app/
+│   │   ├── api/              # API routes
+│   │   │   ├── stats/        # Statistics endpoint
+│   │   │   ├── revenue/      # Revenue data endpoint
+│   │   │   ├── orders/       # Orders data endpoint
+│   │   │   ├── users/        # Users data endpoint
+│   │   │   └── traffic/      # Traffic data endpoint
+│   │   ├── globals.css       # Global styles
+│   │   ├── layout.tsx        # Root layout
+│   │   └── page.tsx          # Main dashboard page
+│   ├── components/
+│   │   ├── charts/           # Chart components
+│   │   │   ├── RevenueChart.tsx
+│   │   │   ├── OrdersChart.tsx
+│   │   │   ├── UserDistributionChart.tsx
+│   │   │   └── TrafficSourceChart.tsx
+│   │   ├── layout/           # Layout components
+│   │   │   ├── Sidebar.tsx
+│   │   │   └── Header.tsx
+│   │   └── ui/               # UI components
+│   │       ├── KPICard.tsx
+│   │       └── FilterSection.tsx
+│   ├── lib/
+│   │   └── api.ts            # API utilities
+│   ├── store/
+│   │   └── dashboardStore.ts # Zustand store
+│   └── types/
+│       └── index.ts          # TypeScript types
+├── package.json
+├── tsconfig.json
+├── tailwind.config.ts
+├── next.config.js
+└── README.md
 ```
 
 ## 🚀 Getting Started
@@ -89,7 +91,7 @@ analytics-dashboard/
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/hrithikBiswas/Analytics-Dashboard.git
 cd analytics-dashboard
 ```
 
@@ -114,154 +116,241 @@ npm run build
 npm start
 ```
 
-## 📊 Dashboard Components
+## 📡 API Endpoints
 
-### KPI Cards
+All API endpoints are located in `src/app/api/` and support query parameters for filtering:
 
-- Total Revenue with currency formatting
-- Total Users with number formatting
-- Orders with trend indicators
-- Conversion Rate with percentage formatting
+### Query Parameters
 
-### Charts
+- `dateRange`: `7days` | `30days` | `12months`
+- `userType`: `all` | `free` | `premium` | `enterprise`
 
-- **Revenue Over Time**: Interactive line chart with 12-month data
-- **Orders Per Month**: Animated bar chart
-- **User Distribution**: Pie chart with user segments
-- **Traffic Sources**: Optional advanced traffic analysis
+### Available Endpoints
 
-### Filtering System
+#### GET /api/stats
 
-- Date Range: Last 7 days, 30 days, or 12 months
-- User Type: All users, Free, Premium, or Enterprise
-- Active filter indicators with visual feedback
+Returns dashboard statistics (KPI data)
 
-## 🎨 Theme System
+```typescript
+{
+    totalRevenue: number;
+    totalUsers: number;
+    totalOrders: number;
+    conversionRate: number;
+    revenueChange: number;
+    usersChange: number;
+    ordersChange: number;
+    conversionChange: number;
+}
+```
 
-The dashboard includes a comprehensive dark/light theme system:
+#### GET /api/revenue
 
-- **Light Theme**: Clean, modern interface with subtle shadows
-- **Dark Theme**: Reduced eye strain with high contrast ratios
-- **Persistence**: Theme preference saved to localStorage
-- **Smooth Transitions**: Animated theme switching
+Returns revenue data over time
 
-## 📱 Responsive Design
+```typescript
+Array<{
+    month: string;
+    revenue: number;
+    orders: number;
+}>;
+```
 
-### Mobile (< 768px)
+#### GET /api/orders
 
-- Collapsible sidebar with hamburger menu
-- Stacked chart layout
-- Touch-friendly controls
-- Optimized spacing and typography
+Returns orders data
 
-### Tablet (768px - 1024px)
+```typescript
+Array<{
+    month: string;
+    orders: number;
+}>;
+```
 
-- Collapsible sidebar with toggle
-- Two-column chart grid
-- Responsive typography
+#### GET /api/users
 
-### Desktop (> 1024px)
+Returns user distribution data
 
-- Fixed sidebar with navigation
-- Multi-column layout
-- Hover states and micro-interactions
-- Full feature set
+```typescript
+Array<{
+    name: string;
+    value: number;
+    color: string;
+}>;
+```
 
-## 🔧 Architecture Decisions
+#### GET /api/traffic
 
-### State Management
+Returns traffic source data
 
-- **Zustand**: Chosen for simplicity and performance
-- **Persist Middleware**: Theme preference persistence
-- **Optimistic Updates**: Immediate UI feedback
+```typescript
+Array<{
+    source: string;
+    value: number;
+    color: string;
+}>;
+```
 
-### Component Architecture
+## 🎨 Features Implementation
 
-- **Atomic Design**: Small, reusable components
-- **Memoization**: Prevent unnecessary re-renders
-- **Type Safety**: Full TypeScript coverage
-- **Separation of Concerns**: Clear separation between UI and logic
+### Responsive Design
+
+- **Mobile**: Sidebar collapses to overlay, stacked cards
+- **Tablet**: Optimized grid layout
+- **Desktop**: Full sidebar, multi-column grid
+
+### Theme Toggle
+
+- Persistent dark/light mode
+- Smooth transitions
+- System preference detection
+
+### State Management (Zustand)
+
+```typescript
+// Global state includes:
+- filters: { dateRange, userType }
+- theme: 'light' | 'dark'
+- sidebarCollapsed: boolean
+- loading: boolean
+- error: string | null
+```
 
 ### Performance Optimizations
 
-- **React.memo**: Component memoization
-- **useMemo**: Computed value caching
-- **Lazy Loading**: Code splitting ready
-- **Efficient Dependencies**: Minimal re-render triggers
+- **Memoized Components**: React.memo for all components
+- **Lazy Loading**: Dynamic imports for heavy components
+- **Optimized Re-renders**: Zustand selective subscriptions
+- **Code Splitting**: Next.js automatic code splitting
 
-## 🧪 Testing & Quality
+### Loading States
 
-### Code Quality Tools
+- Skeleton loaders for all data components
+- Smooth fade-in animations
+- Loading indicators
 
-- **ESLint**: Code linting and formatting
-- **TypeScript**: Static type checking
-- **Prettier**: Code formatting (configured)
+### Error Handling
 
-### Browser Support
+- Try-catch blocks in API calls
+- User-friendly error messages
+- Graceful fallbacks
 
-- Chrome/Edge (Latest)
-- Firefox (Latest)
-- Safari (Latest)
-- Mobile browsers
+## 🎯 Evaluation Criteria Coverage
 
-## 📈 Mock Data System
+### ✅ Code Quality
 
-The dashboard uses a sophisticated mock data system that simulates:
+- Clean, readable code with consistent formatting
+- Comprehensive TypeScript types
+- Proper error handling
+- ESLint configuration
 
-- **API Delays**: 1-second simulated network latency
-- **Error States**: Graceful error handling
-- **Data Variations**: Realistic data patterns
-- **Filter Effects**: Dynamic data based on filters
+### ✅ Component Reusability
 
-## 🔮 Future Enhancements
+- Modular component architecture
+- Reusable KPICard component
+- Generic chart components
+- Shared UI elements
 
-### Potential Features
+### ✅ State Management
 
-- [ ] Real WebSocket connections
-- [ ] Advanced analytics features
-- [ ] Role-based dashboards
-- [ ] Multi-language support
-- [ ] Data caching strategies
-- [ ] A/B testing framework
+- Zustand for global state
+- Efficient state updates
+- Proper data flow
 
-### Technical Improvements
+### ✅ Performance
 
-- [ ] Server-side rendering optimization
-- [ ] Advanced error boundaries
-- [ ] Performance monitoring
-- [ ] Automated testing suite
-- [ ] CI/CD pipeline integration
+- Memoized components (React.memo)
+- Optimized re-renders
+- Lazy loading ready
+- Proper key usage in lists
 
-## 📝 Development Guidelines
+### ✅ Responsiveness
 
-### Code Style
+- Mobile-first approach
+- Breakpoint-based layouts
+- Touch-friendly interactions
+- Collapsible navigation
 
-- Use TypeScript for all new code
-- Follow the existing component patterns
-- Implement proper error handling
-- Add loading states for async operations
-- Use semantic HTML elements
+### ✅ UX/UI
 
-### Component Guidelines
+- Smooth animations and transitions
+- Loading states
+- Empty states consideration
+- Hover effects and micro-interactions
+- Consistent design language
 
-- Make components reusable and composable
-- Use proper props typing
-- Implement responsive design
-- Add hover states and transitions
-- Include accessibility features
+## 🎨 Design Decisions
+
+### Color Palette
+
+- **Primary**: Blue tones for main actions
+- **Success**: Emerald for positive metrics
+- **Danger**: Red for negative metrics
+- **Neutral**: Gray scale for backgrounds
+
+### Typography
+
+- **Font**: Inter (system font fallback)
+- **Hierarchy**: Clear heading levels
+- **Readability**: Optimized line heights and spacing
+
+### Animations
+
+- **Duration**: 200-500ms for smooth transitions
+- **Easing**: Ease-out for natural feel
+- **Types**: Fade, slide, and scale animations
+
+## 🔄 Data Flow
+
+```
+User Action → Filter Change → Zustand Store Update →
+API Call → Data Fetch → State Update → Component Re-render
+```
+
+## 📝 Available Scripts
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
+
+## 🌟 Bonus Features
+
+### Implemented
+
+- ✅ Dark/Light theme toggle
+- ✅ Skeleton loading states
+- ✅ Smooth animations
+- ✅ Responsive notifications dropdown
+- ✅ Search bar (UI ready)
+
+### Future Enhancements
+
+- [ ] Role-based dashboard views
+- [ ] CSV export functionality
+- [ ] Real-time data updates (WebSocket)
+- [ ] Advanced analytics filtering
+- [ ] User authentication
 
 ## 🤝 Contributing
 
+Contributions are welcome! Please follow these steps:
+
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
 
-## 📞 Support
+## 👥 Author
 
-For questions or support, please open an issue in the GitHub repository.
+**Your Name**
+
+- GitHub: https://github.com/hrithikBiswas
+- Email: mr.hrithikbiswas@gmail.com
