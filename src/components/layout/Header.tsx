@@ -102,8 +102,8 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                                     className="fixed inset-0 z-10"
                                     onClick={() => setShowNotifications(false)}
                                 ></div>
-                                <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 animate-slide-in">
-                                    <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                                <div className="absolute -right-15 mt-2 w-60 sm:w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 animate-slide-in">
+                                    <div className="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700">
                                         <h3 className="font-semibold text-gray-900 dark:text-white">
                                             Notifications
                                         </h3>
@@ -112,7 +112,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                                         {notifications.map((notification) => (
                                             <div
                                                 key={notification.id}
-                                                className={`p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors ${
+                                                className={`p-3 sm:p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors ${
                                                     notification.unread
                                                         ? 'bg-blue-50/50 dark:bg-blue-900/10'
                                                         : ''
@@ -127,7 +127,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="p-3 text-center border-t border-gray-200 dark:border-gray-700">
+                                    <div className="p-2 sm:p-3 text-center border-t border-gray-200 dark:border-gray-700">
                                         <button className="text-sm text-blue-600 dark:text-blue-400 hover:underline">
                                             View all notifications
                                         </button>
