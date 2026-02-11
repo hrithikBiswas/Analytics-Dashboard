@@ -46,10 +46,10 @@ const mockStats = {
     },
     '30days': {
         all: {
-            totalRevenue: 54230,
-            totalUsers: 1245,
-            totalOrders: 342,
-            conversionRate: 4.3,
+            totalRevenue: 45345,
+            totalUsers: 1007,
+            totalOrders: 231,
+            conversionRate: 4.5,
             revenueChange: 18.7,
             usersChange: 12.4,
             ordersChange: 5.8,
@@ -88,10 +88,10 @@ const mockStats = {
     },
     '12months': {
         all: {
-            totalRevenue: 648500,
-            totalUsers: 15234,
-            totalOrders: 4128,
-            conversionRate: 4.5,
+            totalRevenue: 54230,
+            totalUsers: 1245,
+            totalOrders: 342,
+            conversionRate: 4.3,
             revenueChange: 24.3,
             usersChange: 32.8,
             ordersChange: 18.5,
@@ -99,8 +99,8 @@ const mockStats = {
         },
         free: {
             totalRevenue: 0,
-            totalUsers: 10892,
-            totalOrders: 2245,
+            totalUsers: 987,
+            totalOrders: 234,
             conversionRate: 4.0,
             revenueChange: 0,
             usersChange: 38.5,
