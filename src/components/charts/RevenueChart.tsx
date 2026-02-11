@@ -54,8 +54,8 @@ const RevenueChart: React.FC<RevenueChartProps> = memo(
                         />
                         <Tooltip
                             contentStyle={{
-                                backgroundColor: 'rgba(17, 24, 39, 0.95)',
-                                border: '1px solid #374151',
+                                backgroundColor: '#f9fafb',
+                                border: '1px solid #e5e7eb',
                                 borderRadius: '8px',
                                 color: '#fff',
                             }}
