@@ -128,12 +128,12 @@ const mockRevenueData = {
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
-    const dateRange = searchParams.get('dateRange') || '30days';
+    const dateRange = searchParams.get('dateRange') || '12months';
     const userType = searchParams.get('userType') || 'all';
 
     const data =
         mockRevenueData[dateRange as keyof typeof mockRevenueData]?.[
-            userType as keyof (typeof mockRevenueData)['30days']
+            userType as keyof (typeof mockRevenueData)['12months']
         ];
 
     if (!data) {

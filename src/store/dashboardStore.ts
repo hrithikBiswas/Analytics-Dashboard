@@ -19,7 +19,7 @@ interface DashboardState {
 export const useDashboardStore = create<DashboardState>((set) => ({
     //stats
     filters: {
-        dateRange: '30days',
+        dateRange: '12months',
         userType: 'all',
     },
     theme: 'light',

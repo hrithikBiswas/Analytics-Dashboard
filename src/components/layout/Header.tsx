@@ -26,9 +26,6 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
     const { sidebarCollapsed, toggleSidebar } = useDashboardStore();
     const [showNotifications, setShowNotifications] = useState(false);
     const [showUserProfile, setShowUserProfile] = useState(false);
-    const { theme, setTheme } = useTheme();
-
-    console.log(theme);
 
     const notifications = [
         { id: 1, title: 'New order received', time: '5 min ago', unread: true },
