@@ -80,6 +80,7 @@ const OrdersChart: React.FC<OrdersChartProps> = memo(
                         <Bar
                             dataKey="orders"
                             name="Orders"
+                            fill="#f59e0b"
                             radius={[8, 8, 0, 0]}
                             animationDuration={800}
                         >
