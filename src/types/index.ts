@@ -55,3 +55,57 @@ export type UserTypeOption = {
     label: string;
     value: FilterState['userType'];
 };
+
+export interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: 'admin' | 'manager' | 'user' | 'guest';
+    status: 'active' | 'inactive' | 'pending';
+    avatar?: string;
+    createdAt: string;
+    lastActive: string;
+}
+
+export interface Order {
+    id: string;
+    customer: string;
+    email: string;
+    product: string;
+    amount: number;
+    status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+    date: string;
+}
+
+export interface Report {
+    id: string;
+    name: string;
+    type: 'revenue' | 'users' | 'orders' | 'performance';
+    dateRange: string;
+    generatedAt: string;
+    size: string;
+}
+
+export interface SettingsCategory {
+    id: string;
+    label: string;
+    icon: string;
+}
+
+export interface NotificationSettings {
+    email: boolean;
+    push: boolean;
+    sms: boolean;
+    orderUpdates: boolean;
+    marketingEmails: boolean;
+    securityAlerts: boolean;
+}
+
+export interface AnalyticsMetrics {
+    pageViews: number;
+    uniqueVisitors: number;
+    bounceRate: number;
+    avgSessionDuration: number;
+    conversionRate: number;
+    revenue: number;
+}

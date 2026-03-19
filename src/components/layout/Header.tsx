@@ -4,8 +4,6 @@ import React, { memo, useState } from 'react';
 import {
     Menu,
     Bell,
-    Sun,
-    Moon,
     Search,
     PanelLeftOpen,
     ChevronDown,
@@ -14,7 +12,6 @@ import {
     UserPen,
 } from 'lucide-react';
 import { useDashboardStore } from '@/store/dashboardStore';
-import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
@@ -143,7 +140,7 @@ const Header: React.FC<HeaderProps> = memo(({ onMenuClick }) => {
                             onClick={() => setShowUserProfile(!showUserProfile)}
                             className="flex items-center cursor-pointer space-x-3 p-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                         >
-                            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-linear-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                                 <span className="text-white text-xs font-semibold">
                                     AD
                                 </span>
